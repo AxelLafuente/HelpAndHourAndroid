@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.helpandhour.ui.screens.SplashScreen.CustomSplashScreen
 import com.example.helpandhour.ui.screens.Home.HomeScreen
+import com.example.helpandhour.ui.screens.LogIn.LoginScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -14,16 +15,21 @@ object HomeRoute
 @Serializable
 object SplashRoute
 
-@Composable
-fun HnHNavHost(){
-    val navController = rememberNavController()
-        NavHost(navController = navController, startDestination = SplashRoute){
-            composable<SplashRoute>{
-                CustomSplashScreen(navController)
-            }
-            composable<HomeRoute>{
-                HomeScreen(navController)
+@Serializable
+object LogInRoute
 
+@Composable
+fun HnHNavHost() {
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = SplashRoute) {
+        composable<SplashRoute> {
+            CustomSplashScreen(navController)
+        }
+        composable<HomeRoute> {
+            HomeScreen(navController)
+        }
+        composable<LogInRoute>{
+            LoginScreen()
         }
 
     }

@@ -7,8 +7,8 @@ import androidx.compose.ui.text.font.FontWeight
 import com.example.helpandhour.R
 
 val Jost = FontFamily(
-    Font(R.font.Jost_thin, FontWeight.Thin),
-    Font(R.font.jost.jost_thinitalic, FontWeight.Thin, FontStyle.Italic),
+    Font(R.font.jost_thin, FontWeight.Thin),
+    Font(R.font.jost_thinitalic, FontWeight.Thin, FontStyle.Italic),
     Font(R.font.jost_extralight, FontWeight.ExtraLight),
     Font(R.font.jost_extralightitalic, FontWeight.ExtraLight, FontStyle.Italic),
     Font(R.font.jost_light, FontWeight.Light),
