@@ -2,6 +2,7 @@ package com.example.helpandhour.ui.screens.LogIn
 
 import DiamondDivider
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -168,7 +169,8 @@ private fun LoginContent(email: String,
                             width = 200
                         )
                         Text(
-                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                                .clickable {  },
                             text = "Não possui conta? Cadastre-se",
                             color = GrayText,
                             style = TextStyle(
