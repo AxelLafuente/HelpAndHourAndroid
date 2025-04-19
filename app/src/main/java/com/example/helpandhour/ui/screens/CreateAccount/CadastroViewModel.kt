@@ -14,6 +14,9 @@ class CadastroViewModel() : ViewModel() {
     var formState by mutableStateOf(CadastroFormState())
         private set
 
+    var checked by mutableStateOf(false)
+        private set
+
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent  = _uiEvent.receiveAsFlow()
 
@@ -35,6 +38,9 @@ class CadastroViewModel() : ViewModel() {
                     else -> formState
                 }
             }
+            is CadastroEvent.OnCheckedChange -> {
+                checked = event.value
+            }
 
             CadastroEvent.Submit -> {
                 viewModelScope.launch {
@@ -42,9 +48,8 @@ class CadastroViewModel() : ViewModel() {
                         _uiEvent.send(UiEvent.ShowSnackbar("Existem campos não preenchidos."))
                         return@launch
                     }
-
-                    // Aqui você pode chamar um use case, repositório, etc.
                     _uiEvent.send(UiEvent.ShowSnackbar("Cadastro realizado com sucesso!"))
+                        return@launch
                 }
             }
         }
