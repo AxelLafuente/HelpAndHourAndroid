@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.helpandhour.navigation.CreateAccountRoute
 import com.example.helpandhour.ui.UiEvent
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -29,6 +30,11 @@ class LoginViewModel() : ViewModel() {
             is LoginEvent.userpasswordChanged -> {
                 password = event.password
             }
+            LoginEvent.Navigate -> {
+                viewModelScope.launch {
+                    _uiEvent.send(UiEvent.Navigate(CreateAccountRoute))
+                }
+            }
 
             LoginEvent.LoginAttemp -> {
                 viewModelScope.launch {
@@ -42,6 +48,8 @@ class LoginViewModel() : ViewModel() {
                     }
                 }
             }
+
+
         }
     }
 

@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.helpandhour.ui.screens.CreateAccount.CreateAccountScreen
 import com.example.helpandhour.ui.screens.SplashScreen.CustomSplashScreen
 import com.example.helpandhour.ui.screens.Home.HomeScreen
 import com.example.helpandhour.ui.screens.LogIn.LoginScreen
@@ -18,6 +19,9 @@ object SplashRoute
 @Serializable
 object LogInRoute
 
+@Serializable
+object CreateAccountRoute
+
 @Composable
 fun HnHNavHost() {
     val navController = rememberNavController()
@@ -29,7 +33,10 @@ fun HnHNavHost() {
             HomeScreen(navController)
         }
         composable<LogInRoute>{
-            LoginScreen()
+            LoginScreen(navController)
+        }
+        composable<CreateAccountRoute>{
+            CreateAccountScreen()
         }
 
     }
