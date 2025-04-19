@@ -35,8 +35,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.example.helpandhour.navigation.CreateAccountRoute
 import com.example.helpandhour.ui.UiEvent
 import com.example.helpandhour.ui.components.CustomPositiveButton
 import com.example.helpandhour.ui.components.CustomTextField
@@ -49,7 +51,7 @@ import com.example.helpandhour.ui.theme.LogoImgs
 import com.example.helpandhour.ui.theme.White
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavHostController) {
 
     val viewModel = viewModel<LoginViewModel>(){
         LoginViewModel()
@@ -65,7 +67,11 @@ fun LoginScreen() {
     LaunchedEffect(Unit) {
         viewModel.uiEvent.collect { uiEvent ->
             when (uiEvent) {
-                is UiEvent.Navigate<*> -> TODO()
+                is UiEvent.Navigate<*> -> {
+                    when (uiEvent.route) {
+                        is CreateAccountRoute -> navController.navigate(CreateAccountRoute)
+                    }
+                }
 
                 UiEvent.NavigateBack -> TODO()
 
@@ -170,7 +176,7 @@ private fun LoginContent(email: String,
                         )
                         Text(
                             modifier = Modifier.align(Alignment.CenterHorizontally)
-                                .clickable {  },
+                                .clickable { onEvent(LoginEvent.Navigate) },
                             text = "Não possui conta? Cadastre-se",
                             color = GrayText,
                             style = TextStyle(

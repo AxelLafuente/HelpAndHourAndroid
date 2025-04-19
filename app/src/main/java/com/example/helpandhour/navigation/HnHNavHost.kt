@@ -33,7 +33,7 @@ fun HnHNavHost() {
             HomeScreen(navController)
         }
         composable<LogInRoute>{
-            CreateAccountScreen()
+            LoginScreen(navController)
         }
         composable<CreateAccountRoute>{
             CreateAccountScreen()

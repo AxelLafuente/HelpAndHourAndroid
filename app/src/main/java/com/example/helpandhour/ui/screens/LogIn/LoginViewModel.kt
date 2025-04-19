@@ -30,7 +30,7 @@ class LoginViewModel() : ViewModel() {
             is LoginEvent.userpasswordChanged -> {
                 password = event.password
             }
-            LoginEvent.createAccountRequest -> {
+            LoginEvent.Navigate -> {
                 viewModelScope.launch {
                     _uiEvent.send(UiEvent.Navigate(CreateAccountRoute))
                 }
@@ -48,6 +48,8 @@ class LoginViewModel() : ViewModel() {
                     }
                 }
             }
+
+
         }
     }
 

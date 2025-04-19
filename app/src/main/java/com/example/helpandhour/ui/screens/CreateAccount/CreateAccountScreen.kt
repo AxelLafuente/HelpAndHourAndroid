@@ -1,7 +1,6 @@
 package com.example.helpandhour.ui.screens.CreateAccount
 
 import DiamondDivider
-import android.widget.CheckBox
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,8 +13,11 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -23,9 +25,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.helpandhour.ui.UiEvent
 import com.example.helpandhour.ui.components.CustomTextField
 import com.example.helpandhour.ui.theme.DefaultBackground
-import com.example.helpandhour.ui.theme.DefaultComponentColor
 import com.example.helpandhour.ui.theme.Jost
 import com.example.helpandhour.ui.theme.LightComponentColor
 import com.example.helpandhour.ui.theme.White
@@ -34,13 +37,41 @@ import com.example.helpandhour.ui.theme.White
 @Composable
 fun CreateAccountScreen() {
 
-    CreateAccountContent()
+    val viewModel = viewModel<CadastroViewModel>{
+        CadastroViewModel()
+    }
+
+    val cadastroForm = viewModel.formState
+
+    val snackbarHostState = remember {
+        SnackbarHostState()
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.uiEvent.collect { uiEvent ->
+            when (uiEvent) {
+                is UiEvent.Navigate<*> -> TODO()
+
+                UiEvent.NavigateBack -> TODO()
+
+                is UiEvent.ShowSnackbar -> snackbarHostState.showSnackbar(
+                    message = uiEvent.mesage,
+                )
+            }
+        }
+    }
+
+    CreateAccountContent(cadastroForm, viewModel::onEvent, snackbarHostState)
 
 }
 
 
 @Composable
-fun CreateAccountContent() {
+fun CreateAccountContent(
+    cadastroForm: CadastroFormState,
+    onEvent: (CadastroEvent) -> Unit,
+    snackbarHostState: SnackbarHostState
+) {
 
     var scrollState = rememberScrollState()
     Scaffold(
@@ -78,62 +109,62 @@ fun CreateAccountContent() {
                     CustomTextField(
                         placeholder = "Nome Completo*",
                         modifier = Modifier.padding(vertical = 8.dp, horizontal = 24.dp),
-                        value = "",
-                        onValueChange = {}
+                        value = cadastroForm.nome,
+                        onValueChange = {onEvent(CadastroEvent.OnFieldChanged("nome", it))}
                     )
                     CustomTextField(
                         placeholder = "Endereço*",
                         modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp),
-                        value = "",
-                        onValueChange = {}
+                        value = cadastroForm.endereco,
+                        onValueChange = {onEvent(CadastroEvent.OnFieldChanged("endereco", it))}
                     )
                     CustomTextField(
-                        placeholder = "Numero",
+                        placeholder = "Numero*",
                         modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp),
-                        value = "",
-                        onValueChange = {}
+                        value =cadastroForm.numero ,
+                        onValueChange = {onEvent(CadastroEvent.OnFieldChanged("numero", it))}
                     )
                     CustomTextField(
-                        placeholder = "CEP",
+                        placeholder = "CEP*",
                         modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp),
-                        value = "",
-                        onValueChange = {}
+                        value = cadastroForm.cep,
+                        onValueChange = {onEvent(CadastroEvent.OnFieldChanged("cep", it))}
                     )
                     CustomTextField(
                         placeholder = "Telefone*",
                         modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp),
-                        value = "",
-                        onValueChange = {}
+                        value = cadastroForm.telefone,
+                        onValueChange = {onEvent(CadastroEvent.OnFieldChanged("telefone", it))}
                     )
                     CustomTextField(
                         placeholder = "Email*",
                         modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp),
-                        value = "",
-                        onValueChange = {}
+                        value = cadastroForm.email,
+                        onValueChange = {onEvent(CadastroEvent.OnFieldChanged("email", it))}
                     )
                     CustomTextField(
                         placeholder = "Instituição de ensino*",
                         modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp),
-                        value = "",
-                        onValueChange = {}
+                        value = cadastroForm.ensino,
+                        onValueChange = {onEvent.invoke(CadastroEvent.OnFieldChanged("ensino", it))}
                     )
                     CustomTextField(
                         placeholder = "Data de Nascimento*",
                         modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp),
-                        value = "",
-                        onValueChange = {}
+                        value = cadastroForm.nascimento,
+                        onValueChange = {onEvent(CadastroEvent.OnFieldChanged("nascimento", it))}
                     )
                     CustomTextField(
                         placeholder = "Senha*",
                         modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp),
-                        value = "",
-                        onValueChange = {}
+                        value = cadastroForm.senha,
+                        onValueChange = {onEvent(CadastroEvent.OnFieldChanged("senha", it))}
                     )
                     CustomTextField(
                         placeholder = "Confirmar senha*",
                         modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp),
-                        value = "",
-                        onValueChange = {}
+                        value = cadastroForm.confirmarSenha,
+                        onValueChange = {onEvent(CadastroEvent.OnFieldChanged("confirmarSenha", it))}
                     )
                     Checkbox(modifier = Modifier.padding(vertical = 24.dp), checked = false, onCheckedChange = {})
 
@@ -147,5 +178,16 @@ fun CreateAccountContent() {
 @Preview
 @Composable
 private fun CreateAccountContentPreview() {
-    CreateAccountContent()
+
+    val viewModel = viewModel<CadastroViewModel>{
+        CadastroViewModel()
+    }
+
+    val cadastroForm = viewModel.formState
+
+    val snackbarHostState = remember {
+        SnackbarHostState()
+    }
+
+    CreateAccountContent(cadastroForm, viewModel::onEvent, snackbarHostState)
 }
