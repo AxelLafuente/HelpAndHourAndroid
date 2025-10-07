@@ -24,14 +24,24 @@ Este app é uma **adaptação de um layout projetado no Figma**, transformado em
 ## 📦 Estrutura do Projeto
 
 HelpAndHourAndroid/
+
+
 ├── app/
+
 │   ├── src/
+
 │   │   ├── main/
+
 │   │   │   ├── java/com/example/helpandhour/
+
 │   │   │   │   ├── navigation/
+
 │   │   │   │   ├── screens/
+
 │   │   │   │   ├── ui/theme/
+
 │   │   │   │   └── MainActivity.kt
+
 
 ---
 
